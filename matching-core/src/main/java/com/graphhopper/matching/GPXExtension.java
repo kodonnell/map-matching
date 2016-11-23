@@ -27,19 +27,32 @@ import com.graphhopper.util.GPXEntry;
 public class GPXExtension {
     final GPXEntry entry;
     final QueryResult queryResult;
-    final int gpxListIndex;
+    private boolean incoming;
+    private boolean directed;
 
-    public GPXExtension(GPXEntry entry, QueryResult queryResult, int gpxListIndex) {
-        this.entry = entry;
+    public GPXExtension(GPXEntry entry, QueryResult queryResult) {
+    	this.entry = entry;
         this.queryResult = queryResult;
-        this.gpxListIndex = gpxListIndex;
+        this.directed = false;
+    }
+    
+    public GPXExtension(GPXEntry entry, QueryResult queryResult, boolean incoming) {
+        this(entry, queryResult);
+        this.incoming = incoming;
+        this.directed = true;
     }
 
+    public boolean isDirected() {
+    	return directed;
+    }
+    
+    public boolean isIncoming() {
+    	return incoming;
+    }
+    
     @Override
     public String toString() {
-        return "entry:" + entry
-                + ", query distance:" + queryResult.getQueryDistance()
-                + ", gpxListIndex:" + gpxListIndex;
+        return "entry:" + entry + ", query distance:" + queryResult.getQueryDistance();
     }
 
     public QueryResult getQueryResult() {
